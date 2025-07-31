@@ -276,7 +276,7 @@ export default function VisitorAnalytics() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">Today's Visitors</p>
+              <p className="text-gray-400 text-sm">Today&apos;s Visitors</p>
               <p className="text-2xl font-bold text-white">{todayVisitors}</p>
             </div>
             <Calendar className="w-8 h-8 text-green-400" />

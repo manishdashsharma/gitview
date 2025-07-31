@@ -25,7 +25,7 @@ export default function ProfileViewTracker({ username }) {
       fetchProfileData(selectedPeriod);
       trackProfileView();
     }
-  }, [username, selectedPeriod]);
+  }, [username, selectedPeriod, fetchProfileData, trackProfileView]);
 
   const fetchProfileData = async (days) => {
     setLoading(true);
@@ -258,7 +258,7 @@ export default function ProfileViewTracker({ username }) {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">Today's Views</p>
+              <p className="text-gray-400 text-sm">Today&apos;s Views</p>
               <p className="text-2xl font-bold text-white">{todayViews}</p>
             </div>
             <Calendar className="w-8 h-8 text-green-400" />
