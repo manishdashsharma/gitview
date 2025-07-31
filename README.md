@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GitView Banner](https://via.placeholder.com/1200x400/0f172a/3b82f6?text=GitView+-+GitHub+Analytics+Platform)
+![GitView Banner](https://github.com/manishdashsharma/gitview/blob/main/public/image.png)
 
 **World-class GitHub profile analytics with beautiful visualizations**
 
