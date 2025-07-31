@@ -110,10 +110,6 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 </div>
 
-## 📱 Screenshots
-
-
-
 ## 🎯 Use Cases
 
 ### 👨‍💻 **For Developers**
