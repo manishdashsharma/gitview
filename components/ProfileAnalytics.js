@@ -94,7 +94,7 @@ export default function ProfileAnalytics({ userData, onBack }) {
             onClick={onBack}
             whileHover={{ scale: 1.05, x: -5 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-gray-300 hover:bg-gray-800 hover:border-gray-600 transition-all"
+            className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white hover:bg-gray-800 hover:border-gray-600 transition-all"
           >
             <span>←</span>
             <span>Back to search</span>
@@ -120,13 +120,13 @@ export default function ProfileAnalytics({ userData, onBack }) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-xl border border-gray-700/50 rounded-xl shadow-2xl z-50"
+                  className="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50"
                 >
                   <div className="p-2">
                     <motion.button
                       onClick={handleCopyLink}
                       whileHover={{ scale: 1.02, x: 5 }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 text-gray-300 hover:text-white transition-colors"
+                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800 text-gray-300 hover:text-white transition-colors"
                     >
                       {copied ? (
                         <>
@@ -144,7 +144,7 @@ export default function ProfileAnalytics({ userData, onBack }) {
                     <motion.button
                       onClick={handleShareTwitter}
                       whileHover={{ scale: 1.02, x: 5 }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 text-gray-300 hover:text-white transition-colors"
+                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800 text-gray-300 hover:text-white transition-colors"
                     >
                       <Twitter className="w-4 h-4 text-blue-400" />
                       <span>Share on Twitter</span>
@@ -153,7 +153,7 @@ export default function ProfileAnalytics({ userData, onBack }) {
                     <motion.button
                       onClick={handleShareLinkedIn}
                       whileHover={{ scale: 1.02, x: 5 }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 text-gray-300 hover:text-white transition-colors"
+                      className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800 text-gray-300 hover:text-white transition-colors"
                     >
                       <Linkedin className="w-4 h-4 text-blue-600" />
                       <span>Share on LinkedIn</span>
@@ -170,7 +170,7 @@ export default function ProfileAnalytics({ userData, onBack }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-8 mb-8"
+          className="bg-gray-900 border border-gray-800 rounded-2xl p-8 mb-8"
         >
           <div className="flex flex-col md:flex-row items-start space-y-6 md:space-y-0 md:space-x-8">
             <motion.div
@@ -299,7 +299,7 @@ export default function ProfileAnalytics({ userData, onBack }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 * index }}
               whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl p-4 hover:border-gray-700/50 transition-all"
+              className="bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-gray-700 transition-all"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className={`p-2 rounded-lg bg-gradient-to-r ${stat.gradient}`}>
@@ -339,7 +339,7 @@ export default function ProfileAnalytics({ userData, onBack }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-8"
+            className="bg-gray-900 border border-gray-800 rounded-2xl p-8"
           >
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
               <Award className="w-6 h-6 mr-3 text-yellow-400" />

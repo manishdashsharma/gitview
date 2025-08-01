@@ -41,7 +41,7 @@ export default function PinnedRepositories({ userData }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
-      className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6 mb-8"
+      className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8"
     >
       <div className="flex items-center space-x-3 mb-6">
         <div className="p-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500">
@@ -61,7 +61,7 @@ export default function PinnedRepositories({ userData }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * index }}
             whileHover={{ scale: 1.02, y: -2 }}
-            className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4 group hover:border-gray-600/50 transition-all"
+            className="bg-gray-800 border border-gray-700 rounded-xl p-4 group hover:border-gray-600 transition-all"
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex-1">

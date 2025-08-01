@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Allow crawling of profile pages
+Allow: /profile/
+
+# Allow API endpoints for better indexing
+Allow: /api/og/
+
+# Disallow sensitive API endpoints
+Disallow: /api/github/
+Disallow: /api/visitors
+Disallow: /api/profile-views/
+
+# Sitemap location
+Sitemap: https://gitview-analytics.easytechinnovate.site/sitemap.xml
+
+# Crawl delay for better server performance
+Crawl-delay: 1

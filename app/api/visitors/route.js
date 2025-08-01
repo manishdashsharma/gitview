@@ -14,14 +14,10 @@ export async function GET(request) {
       // Try MongoDB first
       await dbConnect();
       
-      // Find or create today's visitor record
+      // Just find today's visitor record, don't increment on GET
       let todayVisitor = await Visitor.findOne({ date: today });
       if (!todayVisitor) {
-        todayVisitor = await Visitor.create({ date: today, count: 1 });
-      } else {
-        todayVisitor.count += 1;
-        todayVisitor.updatedAt = new Date();
-        await todayVisitor.save();
+        todayVisitor = await Visitor.create({ date: today, count: 0 });
       }
 
       // Get visitor data for the requested number of days
@@ -92,5 +88,35 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  return GET(request);
+  try {
+    const url = new URL(request.url);
+    
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+    
+    try {
+      // Try MongoDB first
+      await dbConnect();
+      
+      // Find or create today's visitor record and increment
+      let todayVisitor = await Visitor.findOne({ date: today });
+      if (!todayVisitor) {
+        todayVisitor = await Visitor.create({ date: today, count: 1 });
+      } else {
+        todayVisitor.count += 1;
+        todayVisitor.updatedAt = new Date();
+        await todayVisitor.save();
+      }
+
+      return NextResponse.json({ success: true, count: todayVisitor.count });
+      
+    } catch (dbError) {
+      console.log('MongoDB unavailable for visitor tracking:', dbError.message);
+      return NextResponse.json({ success: false, error: 'Database unavailable' }, { status: 500 });
+    }
+    
+  } catch (error) {
+    console.error('Visitor tracking error:', error);
+    return NextResponse.json({ success: false, error: 'Failed to track visitor' }, { status: 500 });
+  }
 }

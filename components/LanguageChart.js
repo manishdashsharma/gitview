@@ -104,7 +104,7 @@ export default function LanguageChart({ userData }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
-      className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6 mb-8"
+      className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8"
     >
       <div className="flex items-center space-x-3 mb-6">
         <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
@@ -118,7 +118,7 @@ export default function LanguageChart({ userData }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chart */}
-        <div className="bg-gray-800/30 rounded-xl p-4">
+        <div className="bg-gray-800 rounded-xl p-4">
           <Chart
             options={chartOptions}
             series={chartSeries}
@@ -137,7 +137,7 @@ export default function LanguageChart({ userData }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg"
+              className="flex items-center justify-between p-3 bg-gray-800 rounded-lg"
             >
               <div className="flex items-center space-x-3">
                 <div 

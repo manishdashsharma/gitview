@@ -82,7 +82,7 @@ export default function CommitActivityChart({ userData }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6 mb-8"
+      className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8"
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
@@ -100,7 +100,7 @@ export default function CommitActivityChart({ userData }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
-          className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4"
+          className="bg-gray-800 border border-gray-700 rounded-xl p-4"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -113,7 +113,7 @@ export default function CommitActivityChart({ userData }) {
 
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
-          className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4"
+          className="bg-gray-800 border border-gray-700 rounded-xl p-4"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -126,7 +126,7 @@ export default function CommitActivityChart({ userData }) {
 
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
-          className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4"
+          className="bg-gray-800 border border-gray-700 rounded-xl p-4"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -147,7 +147,7 @@ export default function CommitActivityChart({ userData }) {
       </div>
 
       {/* Activity Chart */}
-      <div className="bg-gray-800/30 rounded-xl p-4">
+      <div className="bg-gray-800 rounded-xl p-4">
         <h3 className="text-sm font-medium text-gray-300 mb-3">Monthly Commit Activity</h3>
         <Chart
           options={chartOptions}

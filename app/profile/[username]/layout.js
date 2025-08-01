@@ -2,9 +2,10 @@ export async function generateMetadata({ params }) {
   try {
     const { username } = await params;
     
-    // Fetch user data for meta tags
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/github/${username}`, {
-      cache: 'no-store'
+    // Fetch user data for meta tags with better caching
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://gitview-analytics.easytechinnovate.site'}/api/github/${username}`, {
+      cache: 'force-cache',
+      next: { revalidate: 3600 } // Revalidate every hour
     });
     
     if (!response.ok) {
@@ -22,12 +23,21 @@ export async function generateMetadata({ params }) {
       ? `${userData.bio} • ${userData.public_repos} repositories • ${userData.followers} followers • View detailed GitHub analytics and insights.`
       : `@${userData.login} • ${userData.public_repos} repositories • ${userData.followers} followers • View detailed GitHub analytics and insights on GitView.`;
     
-    const imageUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/og/${username}`;
+    const imageUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://gitview-analytics.easytechinnovate.site'}/api/og/${username}`;
     
     return {
       title,
       description,
-      keywords: `${userData.login}, GitHub, analytics, profile, repositories, commits, ${userData.topLanguages?.map(l => l.language).join(', ') || 'programming'}`,
+      keywords: [
+        userData.login,
+        userData.name || userData.login,
+        'github analytics',
+        'github profile',
+        'developer analytics',
+        'repository statistics',
+        'commit analysis',
+        ...(userData.topLanguages?.map(l => l.language.toLowerCase()) || ['programming'])
+      ],
       authors: [{ name: userData.name || userData.login, url: userData.html_url }],
       creator: userData.name || userData.login,
       
@@ -35,7 +45,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title,
         description,
-        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/profile/${username}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://gitview-analytics.easytechinnovate.site'}/profile/${username}`,
         siteName: 'GitView - GitHub Analytics',
         images: [
           {
@@ -60,7 +70,38 @@ export async function generateMetadata({ params }) {
       
       // Additional meta tags
       alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/profile/${username}`,
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://gitview-analytics.easytechinnovate.site'}/profile/${username}`,
+      },
+      
+      // Schema.org structured data
+      other: {
+        'application/ld+json': JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: userData.name || userData.login,
+          alternateName: userData.login,
+          description: userData.bio || `GitHub developer with ${userData.public_repos} repositories`,
+          url: userData.html_url,
+          image: userData.avatar_url,
+          sameAs: [
+            userData.html_url,
+            ...(userData.blog ? [userData.blog] : []),
+            ...(userData.twitter_username ? [`https://twitter.com/${userData.twitter_username}`] : [])
+          ],
+          worksFor: userData.company ? {
+            '@type': 'Organization',
+            name: userData.company
+          } : undefined,
+          address: userData.location ? {
+            '@type': 'PostalAddress',
+            addressLocality: userData.location
+          } : undefined,
+          knowsAbout: userData.topLanguages?.map(l => l.language) || ['Programming'],
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `${process.env.NEXT_PUBLIC_BASE_URL || 'https://gitview-analytics.easytechinnovate.site'}/profile/${username}`
+          }
+        })
       },
       
       // Robots and indexing

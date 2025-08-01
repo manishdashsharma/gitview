@@ -80,18 +80,30 @@ export default function GitView() {
   useEffect(() => {
     setMounted(true);
     
-    // Fetch visitor count only once
-    const fetchVisitorCount = async () => {
+    // Track visitor and fetch count only once when page loads
+    const trackVisitorAndFetchCount = async () => {
       try {
+        // First, track the visitor
+        await fetch('/api/visitors', { method: 'POST' });
+        
+        // Then fetch the updated count
         const response = await fetch('/api/visitors');
         const data = await response.json();
         setVisitors(data.count || 0);
       } catch (error) {
-        console.error('Error fetching visitor count:', error);
+        console.error('Error tracking visitor or fetching count:', error);
+        // Fallback: just fetch count without tracking
+        try {
+          const response = await fetch('/api/visitors');
+          const data = await response.json();
+          setVisitors(data.count || 0);
+        } catch (fallbackError) {
+          console.error('Error fetching visitor count:', fallbackError);
+        }
       }
     };
     
-    fetchVisitorCount();
+    trackVisitorAndFetchCount();
 
     // Check for shared user in URL
     if (typeof window !== 'undefined') {
@@ -140,7 +152,7 @@ export default function GitView() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+    <div className="min-h-screen bg-black">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -177,7 +189,7 @@ export default function GitView() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="relative z-10 border-b border-gray-800/50 backdrop-blur-xl bg-gray-950/80"
+        className="relative z-10 border-b border-gray-800 bg-black"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-4">
@@ -255,7 +267,7 @@ export default function GitView() {
                       damping: 15,
                       delay: 0.2 
                     }}
-                    className="inline-flex items-center px-4 py-2 rounded-full bg-gray-800/50 border border-gray-700/50 text-sm text-gray-300 mb-6"
+                    className="inline-flex items-center px-4 py-2 rounded-full bg-gray-900 border border-gray-700 text-sm text-gray-300 mb-6"
                   >
                     <Sparkles className="w-4 h-4 mr-2 text-yellow-400" />
                     World-class GitHub Analytics
@@ -290,7 +302,7 @@ export default function GitView() {
                     >
                       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300" />
                       
-                      <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center bg-gray-900/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-2 shadow-2xl gap-2 sm:gap-0">
+                      <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center bg-gray-900 border border-gray-700 rounded-2xl p-2 shadow-2xl gap-2 sm:gap-0">
                         <div className="flex items-center flex-1 px-4 min-h-[56px] sm:min-h-0">
                           <Github className="w-5 h-5 text-gray-400 mr-3" />
                           <input
@@ -349,7 +361,7 @@ export default function GitView() {
                         onClick={() => setUsername(example)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-3 py-1 rounded-full bg-gray-800/50 border border-gray-700/50 text-blue-400 hover:bg-gray-800 hover:border-blue-500/50 transition-all"
+                        className="px-3 py-1 rounded-full bg-gray-900 border border-gray-700 text-blue-400 hover:bg-gray-800 hover:border-blue-500 transition-all"
                       >
                         {example}
                       </motion.button>
@@ -396,7 +408,7 @@ export default function GitView() {
                       <div className="absolute -inset-1 bg-gradient-to-r opacity-20 group-hover:opacity-40 transition-opacity duration-300 rounded-2xl blur" 
                            style={{ backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))` }} />
                       
-                      <div className="relative h-full p-6 sm:p-8 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl hover:border-gray-700/50 transition-all duration-300">
+                      <div className="relative h-full p-6 sm:p-8 bg-gray-900 border border-gray-800 rounded-2xl hover:border-gray-700 transition-all duration-300">
                         <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${feature.gradient} mb-6`}>
                           <div className="text-white">
                             {feature.icon}
@@ -444,7 +456,7 @@ export default function GitView() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="relative z-10 border-t border-gray-800/50 backdrop-blur-xl bg-gray-950/80 mt-20"
+        className="relative z-10 border-t border-gray-800 bg-black mt-20"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">

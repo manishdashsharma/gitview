@@ -70,7 +70,7 @@ export default function ProfileViewTracker({ username }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6"
+        className="bg-gray-900 border border-gray-800 rounded-2xl p-6"
       >
         <div className="animate-pulse">
           <div className="h-6 bg-gray-700 rounded w-1/3 mb-4"></div>
@@ -90,7 +90,7 @@ export default function ProfileViewTracker({ username }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6"
+        className="bg-gray-900 border border-gray-800 rounded-2xl p-6"
       >
         <div className="text-center py-6">
           <User className="w-10 h-10 text-gray-600 mx-auto mb-3" />
@@ -203,7 +203,7 @@ export default function ProfileViewTracker({ username }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-6 mb-8"
+      className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-8"
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -218,7 +218,7 @@ export default function ProfileViewTracker({ username }) {
         </div>
 
         {/* Period Selector */}
-        <div className="flex bg-gray-800/50 rounded-lg p-1">
+        <div className="flex bg-gray-800 rounded-lg p-1">
           {periods.map((period) => (
             <motion.button
               key={period.value}
@@ -241,7 +241,7 @@ export default function ProfileViewTracker({ username }) {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
-          className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4"
+          className="bg-gray-800 border border-gray-700 rounded-xl p-4"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -254,7 +254,7 @@ export default function ProfileViewTracker({ username }) {
 
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
-          className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4"
+          className="bg-gray-800 border border-gray-700 rounded-xl p-4"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -267,7 +267,7 @@ export default function ProfileViewTracker({ username }) {
 
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
-          className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4"
+          className="bg-gray-800 border border-gray-700 rounded-xl p-4"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -280,7 +280,7 @@ export default function ProfileViewTracker({ username }) {
       </div>
 
       {/* Chart */}
-      <div className="bg-gray-800/30 rounded-xl p-4">
+      <div className="bg-gray-800 rounded-xl p-4">
         <h3 className="text-sm font-medium text-gray-300 mb-3">Profile View Trend</h3>
         <Chart
           options={chartOptions}
