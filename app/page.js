@@ -80,17 +80,18 @@ export default function GitView() {
   useEffect(() => {
     setMounted(true);
     
-    // Fetch visitor count
-    console.log('Fetching visitor count...');
-    fetch('/api/visitors')
-      .then(res => res.json())
-      .then(data => {
-        console.log('Visitor count received:', data);
-        setVisitors(data.count);
-      })
-      .catch((error) => {
+    // Fetch visitor count only once
+    const fetchVisitorCount = async () => {
+      try {
+        const response = await fetch('/api/visitors');
+        const data = await response.json();
+        setVisitors(data.count || 0);
+      } catch (error) {
         console.error('Error fetching visitor count:', error);
-      });
+      }
+    };
+    
+    fetchVisitorCount();
 
     // Check for shared user in URL
     if (typeof window !== 'undefined') {
@@ -179,7 +180,7 @@ export default function GitView() {
         className="relative z-10 border-b border-gray-800/50 backdrop-blur-xl bg-gray-950/80"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 gap-4">
             <motion.div 
               className="flex items-center space-x-3"
               whileHover={{ scale: 1.05 }}
@@ -199,20 +200,20 @@ export default function GitView() {
               </div>
             </motion.div>
 
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2 sm:space-x-6">
               <motion.div 
-                className="flex items-center space-x-4 text-sm text-gray-400"
+                className="flex items-center space-x-2 sm:space-x-4 text-sm text-gray-400"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1 sm:space-x-2">
                   <Eye className="w-4 h-4" />
-                  <span suppressHydrationWarning>{mounted ? visitors.toLocaleString() : '—'} views</span>
+                  <span suppressHydrationWarning className="text-xs sm:text-sm">{mounted ? visitors.toLocaleString() : '—'} views</span>
                 </div>
-                <div className="hidden sm:flex items-center space-x-2">
+                <div className="hidden md:flex items-center space-x-2">
                   <BarChart3 className="w-4 h-4 text-blue-400" />
-                  <span>Analytics</span>
+                  <span className="hidden lg:inline">Analytics</span>
                 </div>
               </motion.div>
 
@@ -222,7 +223,7 @@ export default function GitView() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <a href="#features" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#features" className="text-gray-300 hover:text-white transition-colors text-sm hidden lg:block">
                   Features
                 </a>
               </motion.div>
@@ -262,7 +263,7 @@ export default function GitView() {
 
                   <motion.h1
                     variants={itemVariants}
-                    className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
                   >
                     <span className="text-white">Unlock GitHub</span>
                     <br />
@@ -273,7 +274,7 @@ export default function GitView() {
 
                   <motion.p
                     variants={itemVariants}
-                    className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+                    className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed px-4"
                   >
                     Dive deep into any GitHub profile with beautiful visualizations, 
                     comprehensive statistics, and actionable insights.
@@ -289,15 +290,15 @@ export default function GitView() {
                     >
                       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300" />
                       
-                      <div className="relative flex items-center bg-gray-900/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-2 shadow-2xl">
-                        <div className="flex items-center flex-1 px-4">
+                      <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center bg-gray-900/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-2 shadow-2xl gap-2 sm:gap-0">
+                        <div className="flex items-center flex-1 px-4 min-h-[56px] sm:min-h-0">
                           <Github className="w-5 h-5 text-gray-400 mr-3" />
                           <input
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Enter GitHub username (e.g., octocat)"
-                            className="flex-1 py-4 bg-transparent text-white placeholder-gray-500 focus:outline-none text-lg"
+                            className="flex-1 py-3 sm:py-4 bg-transparent text-white placeholder-gray-500 focus:outline-none text-base sm:text-lg"
                             disabled={loading}
                           />
                         </div>
@@ -307,7 +308,7 @@ export default function GitView() {
                           disabled={loading || !username.trim()}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-semibold shadow-lg transition-all duration-200 flex items-center space-x-2"
+                          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold shadow-lg transition-all duration-200 flex items-center justify-center space-x-2 min-h-[48px] sm:min-h-0"
                         >
                           {loading ? (
                             <motion.div
@@ -339,7 +340,7 @@ export default function GitView() {
                   {/* Quick Examples */}
                   <motion.div
                     variants={itemVariants}
-                    className="mt-6 flex flex-wrap justify-center gap-2 text-sm"
+                    className="mt-6 flex flex-wrap justify-center gap-2 text-xs sm:text-sm px-4"
                   >
                     <span className="text-gray-500">Try:</span>
                     {['octocat', 'torvalds', 'gaearon', 'addyosmani'].map((example) => (
@@ -360,7 +361,7 @@ export default function GitView() {
                 <motion.div
                   id="features"
                   variants={containerVariants}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+                  className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto px-4"
                 >
                   {[
                     {
@@ -395,18 +396,18 @@ export default function GitView() {
                       <div className="absolute -inset-1 bg-gradient-to-r opacity-20 group-hover:opacity-40 transition-opacity duration-300 rounded-2xl blur" 
                            style={{ backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))` }} />
                       
-                      <div className="relative h-full p-8 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl hover:border-gray-700/50 transition-all duration-300">
+                      <div className="relative h-full p-6 sm:p-8 bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl hover:border-gray-700/50 transition-all duration-300">
                         <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${feature.gradient} mb-6`}>
                           <div className="text-white">
                             {feature.icon}
                           </div>
                         </div>
                         
-                        <h3 className="text-xl font-semibold text-white mb-4">
+                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
                           {feature.title}
                         </h3>
                         
-                        <p className="text-gray-400 leading-relaxed">
+                        <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
                           {feature.description}
                         </p>
                       </div>
@@ -445,9 +446,9 @@ export default function GitView() {
         transition={{ delay: 1 }}
         className="relative z-10 border-t border-gray-800/50 backdrop-blur-xl bg-gray-950/80 mt-20"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+            <div className="flex items-center space-x-3">
               <div className="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500">
                 <Github className="w-5 h-5 text-white" />
               </div>
@@ -457,8 +458,8 @@ export default function GitView() {
               </div>
             </div>
             
-            <div className="flex items-center space-x-6 text-sm text-gray-400">
-              <span>Made with ❤️ by Manish</span>
+            <div className="flex items-center space-x-4 sm:space-x-6 text-xs sm:text-sm text-gray-400">
+              <span className="hidden sm:inline">Made with ❤️ by Manish</span>
               <motion.a
                 href="https://github.com/manishdashsharma"
                 whileHover={{ scale: 1.1 }}
@@ -618,9 +619,9 @@ function ProfileAnalytics({ userData, onBack }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-8 mb-8"
+          className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-4 sm:p-6 lg:p-8 mb-8"
         >
-          <div className="flex flex-col md:flex-row items-start space-y-6 md:space-y-0 md:space-x-8">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start space-y-6 lg:space-y-0 lg:space-x-8">
             <motion.div
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ type: "spring", stiffness: 300, damping: 10 }}
@@ -630,18 +631,18 @@ function ProfileAnalytics({ userData, onBack }) {
                 alt={userData.name || userData.login}
                 width={128}
                 height={128}
-                className="w-32 h-32 rounded-2xl border-4 border-gray-700/50 shadow-2xl"
+                className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl border-4 border-gray-700/50 shadow-2xl"
                 priority
               />
             </motion.div>
 
-            <div className="flex-1">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+            <div className="flex-1 text-center lg:text-left">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
                 <div>
-                  <h1 className="text-3xl font-bold text-white mb-2">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                     {userData.name || userData.login}
                   </h1>
-                  <p className="text-xl text-blue-400">@{userData.login}</p>
+                  <p className="text-lg sm:text-xl text-blue-400">@{userData.login}</p>
                 </div>
                 
                 <motion.a
@@ -650,7 +651,7 @@ function ProfileAnalytics({ userData, onBack }) {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="mt-4 md:mt-0 inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-xl text-white font-semibold transition-all shadow-lg"
+                  className="mt-4 lg:mt-0 inline-flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-xl text-white font-semibold transition-all shadow-lg text-sm sm:text-base"
                 >
                   <Github className="w-5 h-5" />
                   <span>View Profile</span>
@@ -658,12 +659,12 @@ function ProfileAnalytics({ userData, onBack }) {
               </div>
 
               {userData.bio && (
-                <p className="text-gray-300 mb-4 text-lg leading-relaxed">
+                <p className="text-gray-300 mb-4 text-base sm:text-lg leading-relaxed">
                   {userData.bio}
                 </p>
               )}
 
-              <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
                 {userData.location && (
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
@@ -701,7 +702,7 @@ function ProfileAnalytics({ userData, onBack }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 mb-8"
         >
           {[
             {
@@ -747,9 +748,9 @@ function ProfileAnalytics({ userData, onBack }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 * index }}
               whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl p-4 hover:border-gray-700/50 transition-all"
+              className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-xl p-3 sm:p-4 hover:border-gray-700/50 transition-all"
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
                 <div className={`p-2 rounded-lg bg-gradient-to-r ${stat.gradient}`}>
                   <div className="text-white">
                     {stat.icon}
@@ -758,10 +759,10 @@ function ProfileAnalytics({ userData, onBack }) {
               </div>
               
               <div>
-                <p className="text-2xl font-bold text-white mb-1">
+                <p className="text-lg sm:text-2xl font-bold text-white mb-1">
                   {stat.value}
                 </p>
-                <p className="text-gray-400 text-xs">
+                <p className="text-gray-400 text-xs leading-tight">
                   {stat.label}
                 </p>
               </div>
@@ -787,26 +788,26 @@ function ProfileAnalytics({ userData, onBack }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-8"
+            className="bg-gray-900/80 backdrop-blur-xl border border-gray-800/50 rounded-2xl p-4 sm:p-6 lg:p-8"
           >
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center justify-center lg:justify-start">
               <Award className="w-6 h-6 mr-3 text-yellow-400" />
               Most Starred Repository
             </h2>
             
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-blue-400 mb-2">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between space-y-4 lg:space-y-0">
+              <div className="flex-1 text-center lg:text-left">
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-400 mb-2">
                   {userData.mostStarredRepo.name}
                 </h3>
                 
                 {userData.mostStarredRepo.description && (
-                  <p className="text-gray-300 mb-4 leading-relaxed">
+                  <p className="text-sm sm:text-base text-gray-300 mb-4 leading-relaxed">
                     {userData.mostStarredRepo.description}
                   </p>
                 )}
                 
-                <div className="flex items-center space-x-6 text-sm text-gray-400">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-6 text-xs sm:text-sm text-gray-400">
                   <div className="flex items-center space-x-2">
                     <Star className="w-4 h-4 text-yellow-400" />
                     <span>{formatNumber(userData.mostStarredRepo.stargazers_count)}</span>
@@ -832,7 +833,7 @@ function ProfileAnalytics({ userData, onBack }) {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="ml-6 px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg text-gray-300 hover:text-white transition-all flex items-center space-x-2"
+                className="lg:ml-6 px-3 sm:px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg text-gray-300 hover:text-white transition-all flex items-center space-x-2 text-sm"
               >
                 <Github className="w-4 h-4" />
                 <span>View</span>

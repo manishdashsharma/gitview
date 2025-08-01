@@ -25,7 +25,7 @@ export default function ProfileViewTracker({ username }) {
       fetchProfileData(selectedPeriod);
       trackProfileView();
     }
-  }, [username, selectedPeriod, fetchProfileData, trackProfileView]);
+  }, [username, selectedPeriod]);
 
   const fetchProfileData = async (days) => {
     setLoading(true);
